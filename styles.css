@@ -391,7 +391,44 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
   transition: color .3s var(--ease-out), border-color .3s var(--ease-out);
 }
 .hero-split-link:hover { color: var(--ink); border-color: var(--ink-soft); }
-.hero-split .stat-value { font-size: clamp(1.3rem, 2.2vw, 1.7rem); }
+
+/* Compact stat strip nested under the home hero text, instead of a big centered block */
+.stats.stats-compact {
+  margin-top: 2.6rem;
+  width: auto;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.stats.stats-compact .stat {
+  text-align: left;
+  padding: 0 1.4rem;
+  border-left: 1px solid var(--line);
+}
+.stats.stats-compact .stat:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.stats.stats-compact .stat-value {
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+}
+.stats.stats-compact .stat-label {
+  font-size: 0.7rem;
+  margin-top: 0.15rem;
+}
+@media (max-width: 480px) {
+  .stats.stats-compact {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 1.4rem;
+    row-gap: 1rem;
+  }
+  .stats.stats-compact .stat {
+    border-left: 0;
+    padding: 0;
+  }
+}
 .hero-gradient.is-subtle { opacity: 0.7; }
 
 /* Cutout hero figure — no frame, floats directly on the dark background */
