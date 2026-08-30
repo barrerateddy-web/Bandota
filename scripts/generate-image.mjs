@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 // Genera una imagen con la API de OpenAI (gpt-image-1) y la guarda en disco.
 // Uso: node scripts/generate-image.mjs "<prompt>" <ruta-salida.png|.webp> [tamaño]
-// Requiere la variable de entorno OPENAI_API_KEY.
+//
+// La API key se resuelve de dos formas:
+// - Variable de entorno OPENAI_API_KEY (uso local).
+// - En Claude Code on the web: un "API credential" para api.openai.com
+//   configurado en el entorno cloud. El proxy de Anthropic adjunta la
+//   cabecera Authorization automáticamente; este script no necesita la key.
 
 import { writeFile, mkdir } from "node:fs/promises";
 import { dirname } from "node:path";
@@ -16,15 +21,11 @@ if (!prompt || !outputPath) {
 }
 
 const apiKey = process.env.OPENAI_API_KEY;
-if (!apiKey) {
-  console.error("Falta la variable de entorno OPENAI_API_KEY.");
-  process.exit(1);
-}
 
 const response = await fetch("https://api.openai.com/v1/images/generations", {
   method: "POST",
   headers: {
-    Authorization: `Bearer ${apiKey}`,
+    ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
