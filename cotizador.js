@@ -6,13 +6,12 @@
 
   var COMPANY_WHATSAPP = "573044777225";
 
-  /* Paste here the URL you get after deploying the Google Apps Script backend
-     (see /apps-script/cotizador-backend.gs.txt for the code + deployment steps).
-     Empty by default — until it's set, the quote still works, it just skips the
-     automatic Calendar/Meet booking and Sheets logging. */
-  var COTIZADOR_WEBHOOK_URL = "";
+  /* Backend en Google Apps Script (ver /apps-script/cotizador-backend.gs.txt)
+     que crea el evento en Calendar + Meet y registra la cotización en Sheets. */
+  var COTIZADOR_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbx6Kw2ZjrK1ZeiIU07_9Q07teQslGAlztLbnpK6ApUVlrOwxkHSQeWS5zgAkwfib-lp/exec";
 
-  var BUSINESS_HOURS = { startHour: 9, endHour: 19, slotMinutes: 30, daysAhead: 14, excludeWeekday0: true };
+  /* Videollamadas: bloque de 4pm a 7pm, todos los días. */
+  var BUSINESS_HOURS = { startHour: 16, endHour: 19, slotMinutes: 30, daysAhead: 14, excludeWeekday0: false };
   var BOGOTA_UTC_OFFSET_MINUTES = -5 * 60;
 
   function formatCOP(value) {
