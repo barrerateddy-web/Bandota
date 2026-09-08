@@ -34,10 +34,10 @@
       ciudad: ""
     };
 
-    var ofertaEl = $("[data-cotizador-oferta]", root);
     var formatosEl = $("[data-cotizador-formatos]", root);
     var packsEl = $("[data-cotizador-packs]", root);
     var serviciosEl = $("[data-cotizador-servicios]", root);
+    var packAddonsEl = $("[data-cotizador-pack-addons]", root);
     var fechasEl = $("[data-cotizador-fechas]", root);
     var horasEl = $("[data-cotizador-horas]", root);
     var nombreInput = $("[data-cotizador-nombre]", root);
@@ -48,83 +48,45 @@
     var successEl = $("[data-cotizador-success]", root);
     var errorEl = $("[data-cotizador-error]", root);
 
-    /* -------- Left column: read-only listing of the real offer -------- */
-    function renderOferta() {
-      if (!ofertaEl) return;
-      var html = "";
+    /* Ceremonia y Hora Loca no están incluidas en los packs (que ya traen
+       cóctel con saxofón + cena con Son Cubano) — por eso se resaltan otra
+       vez como "agrega a tu pack", mismos ids, mismo estado. */
+    var PACK_ADDON_IDS = ["ceremonia", "hora-loca"];
 
-      html += '<div class="cotizador-oferta-block">';
-      html += '<p class="cotizador-oferta-label">Formatos</p>';
-      html += '<div class="format-grid">';
-      data.formatos.forEach(function (f) {
-        html += (
-          '<div class="format-card">' +
-            '<span class="format-size">' + f.resumen + '</span>' +
-            '<h3>' + f.nombre + '</h3>' +
-            '<p>' + f.descripcion + '</p>' +
-            '<p class="format-duracion">' + f.duracion + '</p>' +
-          '</div>'
-        );
-      });
-      html += '</div></div>';
-
-      html += '<div class="cotizador-oferta-block">';
-      html += '<p class="cotizador-oferta-label">Servicios adicionales</p>';
-      html += '<div class="format-grid">';
-      data.servicios.forEach(function (s) {
-        html += (
-          '<div class="format-card">' +
-            '<h3>' + s.nombre + '</h3>' +
-            '<p>' + s.descripcion + '</p>' +
-            '<p class="format-duracion">' + s.duracion + '</p>' +
-          '</div>'
-        );
-      });
-      html += '</div></div>';
-
-      html += '<div class="cotizador-oferta-block">';
-      html += '<p class="cotizador-oferta-label">Packs (cóctel + cena + banda)</p>';
-      html += '<div class="format-grid">';
-      data.packs.forEach(function (p) {
-        html += (
-          '<div class="format-card">' +
-            '<h3>' + p.nombre + '</h3>' +
-            '<p>' + p.descripcion + '</p>' +
-          '</div>'
-        );
-      });
-      html += '</div></div>';
-
-      ofertaEl.innerHTML = html;
-    }
-
-    /* -------- Right column: selectable module -------- */
     function findFormato(id) { return data.formatos.find(function (f) { return f.id === id; }); }
     function findPack(id) { return data.packs.find(function (p) { return p.id === id; }); }
     function findServicio(id) { return data.servicios.find(function (s) { return s.id === id; }); }
 
-    function optionCardHtml(id, nombre, descripcion, isActive) {
+    function optionCardHtml(id, nombre, descripcion, meta, isActive) {
       return (
         '<button type="button" class="cotizador-option' + (isActive ? " is-selected" : "") + '" data-cotizador-value="' + id + '">' +
           '<span class="cotizador-option-name">' + nombre + '</span>' +
           '<span class="cotizador-option-desc">' + descripcion + '</span>' +
+          (meta ? '<span class="cotizador-option-meta">' + meta + '</span>' : "") +
         '</button>'
       );
     }
 
     function renderFormatos() {
       formatosEl.innerHTML = data.formatos.map(function (f) {
-        return optionCardHtml(f.id, f.nombre, f.resumen, state.formatoId === f.id);
+        return optionCardHtml(f.id, f.nombre, f.descripcion, f.resumen + " · " + f.duracion, state.formatoId === f.id);
       }).join("");
     }
     function renderPacks() {
       packsEl.innerHTML = data.packs.map(function (p) {
-        return optionCardHtml(p.id, p.nombre, "Formato + cóctel + cena", state.packId === p.id);
+        return optionCardHtml(p.id, p.nombre, p.descripcion, "", state.packId === p.id);
       }).join("");
     }
     function renderServicios() {
       serviciosEl.innerHTML = data.servicios.map(function (s) {
-        return optionCardHtml(s.id, s.nombre, s.duracion, state.servicios.has(s.id));
+        return optionCardHtml(s.id, s.nombre, s.descripcion, s.duracion, state.servicios.has(s.id));
+      }).join("");
+    }
+    function renderPackAddons() {
+      packAddonsEl.innerHTML = PACK_ADDON_IDS.map(function (id) {
+        var s = findServicio(id);
+        if (!s) return "";
+        return optionCardHtml(s.id, s.nombre, s.descripcion, s.duracion, state.servicios.has(s.id));
       }).join("");
     }
 
@@ -143,6 +105,7 @@
     function onServicioClick(id) {
       if (state.servicios.has(id)) state.servicios.delete(id); else state.servicios.add(id);
       renderServicios();
+      renderPackAddons();
     }
 
     /* -------- Date / time picker (Bogotá business hours) -------- */
@@ -438,10 +401,10 @@
     function onlyDigits(str) { return (str || "").replace(/[^0-9]/g, ""); }
 
     /* -------- Wire up -------- */
-    renderOferta();
     renderFormatos();
     renderPacks();
     renderServicios();
+    renderPackAddons();
     renderFechas();
     renderHoras();
 
@@ -454,6 +417,10 @@
       if (btn) onPackClick(btn.dataset.cotizadorValue);
     });
     serviciosEl.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-cotizador-value]");
+      if (btn) onServicioClick(btn.dataset.cotizadorValue);
+    });
+    packAddonsEl.addEventListener("click", function (e) {
       var btn = e.target.closest("[data-cotizador-value]");
       if (btn) onServicioClick(btn.dataset.cotizadorValue);
     });

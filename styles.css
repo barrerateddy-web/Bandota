@@ -1219,22 +1219,21 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 /* =============================================================
    27. Cotizador — oferta real + módulo de cotización (Bodas)
    ============================================================= */
-.cotizador-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; align-items: start; }
-@media (min-width: 960px) { .cotizador-grid { grid-template-columns: 1.25fr 1fr; } }
-
-.cotizador-oferta-block { margin-bottom: 2.2rem; }
-.cotizador-oferta-label {
-  font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--mute); margin-bottom: 1rem;
+.cotizador-block { margin-bottom: 3rem; }
+.cotizador-block-label {
+  font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
 }
-.format-duracion { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold); margin-top: 0.6rem; }
+.cotizador-block-sublabel {
+  font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--mute); margin: 1.4rem 0 0.9rem;
+}
+.cotizador-block-sublabel:first-of-type { margin-top: 0; }
 
 .cotizador-modulo {
-  padding: clamp(1.5rem, 3vw, 2rem);
+  padding: clamp(1.5rem, 3vw, 2.4rem);
   border: 1px solid var(--line); border-radius: 24px; background: var(--card);
-}
-@media (min-width: 960px) {
-  .cotizador-modulo { position: sticky; top: calc(var(--nav-h) + 1.5rem); }
+  max-width: 640px;
 }
 .cotizador-modulo-title { font-size: 1.3rem; margin-bottom: 1.5rem; }
 
@@ -1244,17 +1243,20 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
   text-transform: uppercase; color: var(--mute); margin-bottom: 0.7rem;
 }
 
-.cotizador-options { display: flex; flex-direction: column; gap: 0.6rem; }
+.cotizador-options {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.9rem;
+}
 .cotizador-option {
-  display: flex; flex-direction: column; gap: 0.15rem; text-align: left;
-  padding: 0.8rem 1rem; border: 1px solid var(--line); border-radius: 12px;
-  background: var(--bg-2); width: 100%;
+  display: flex; flex-direction: column; gap: 0.3rem; text-align: left;
+  padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--bg-2); width: 100%; height: 100%;
   transition: border-color .25s var(--ease-out), background .25s var(--ease-out);
 }
 .cotizador-option:hover { border-color: var(--ink-soft); }
 .cotizador-option.is-selected { border-color: var(--accent); background: var(--accent-soft); }
-.cotizador-option-name { font-weight: 600; font-size: 0.92rem; color: var(--ink); }
-.cotizador-option-desc { font-size: 0.8rem; color: var(--mute); }
+.cotizador-option-name { font-weight: 600; font-size: 1rem; color: var(--ink); }
+.cotizador-option-desc { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; }
+.cotizador-option-meta { font-family: var(--font-mono); font-size: 0.74rem; color: var(--gold); margin-top: 0.2rem; }
 
 .cotizador-days, .cotizador-slots { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .cotizador-days { margin-bottom: 0.8rem; }

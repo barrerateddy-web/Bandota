@@ -66,59 +66,55 @@
   <section class="section" id="portafolio" data-cotizador>
     <div class="container">
       <p class="kicker reveal">Portafolio y cotización</p>
-      <h2 class="section-title reveal" data-split="lines">Tu oferta,<br>a la medida de tu boda.</h2>
-      <p class="section-sub reveal">Esta es la oferta real de LA BANDOTA. Elige tu formato o un pack completo, agrega servicios, y agenda una videollamada para confirmar todo — recibes tu cotización formal al instante.</p>
+      <h2 class="section-title reveal" data-split="lines">Revisa nuestra oferta<br>y cotiza fácil y rápido.</h2>
+      <p class="section-sub reveal">Esta es la oferta real de LA BANDOTA. Elige lo que necesitas para tu boda y agenda una videollamada al final — recibes tu cotización formal al instante.</p>
 
-      <div class="cotizador-grid reveal">
-        <div class="cotizador-oferta" data-cotizador-oferta></div>
+      <div class="cotizador-block reveal">
+        <p class="cotizador-block-label">Servicios individuales</p>
+        <p class="cotizador-block-sublabel">Formato</p>
+        <div class="cotizador-options" data-cotizador-formatos></div>
+        <p class="cotizador-block-sublabel">Servicios adicionales</p>
+        <div class="cotizador-options" data-cotizador-servicios></div>
+      </div>
 
-        <aside class="cotizador-modulo" id="cotizaciones">
-          <h3 class="cotizador-modulo-title">Cotiza y agenda tu llamada</h3>
+      <div class="cotizador-block reveal">
+        <p class="cotizador-block-label">Packs — formato + cóctel + cena</p>
+        <div class="cotizador-options" data-cotizador-packs></div>
+        <p class="cotizador-block-sublabel">Agrega a tu pack</p>
+        <div class="cotizador-options" data-cotizador-pack-addons></div>
+      </div>
 
-          <div class="cotizador-step">
-            <p class="cotizador-step-label">1 · Elige tu formato</p>
-            <div class="cotizador-options" data-cotizador-formatos></div>
+      <div class="cotizador-modulo" id="cotizaciones">
+        <h3 class="cotizador-modulo-title">Agenda tu videollamada y cotiza</h3>
+
+        <div class="cotizador-step">
+          <p class="cotizador-step-label">Fecha y hora de tu videollamada</p>
+          <div class="cotizador-days" data-cotizador-fechas></div>
+          <div class="cotizador-slots" data-cotizador-horas></div>
+        </div>
+
+        <div class="cotizador-step">
+          <p class="cotizador-step-label">Tus datos</p>
+          <div class="form-row">
+            <label for="cotizador-nombre">Nombres de los novios *</label>
+            <input type="text" id="cotizador-nombre" data-cotizador-nombre placeholder="Ej. María &amp; Andrés">
           </div>
-
-          <div class="cotizador-step">
-            <p class="cotizador-step-label">2 · O un pack completo (reemplaza el formato)</p>
-            <div class="cotizador-options" data-cotizador-packs></div>
+          <div class="form-row">
+            <label for="cotizador-whatsapp">Tu WhatsApp (con código de país) *</label>
+            <input type="tel" id="cotizador-whatsapp" data-cotizador-whatsapp placeholder="Ej. 573001234567">
           </div>
-
-          <div class="cotizador-step">
-            <p class="cotizador-step-label">3 · Servicios adicionales (opcional)</p>
-            <div class="cotizador-options" data-cotizador-servicios></div>
+          <div class="form-row">
+            <label for="cotizador-ciudad">Ciudad del evento</label>
+            <input type="text" id="cotizador-ciudad" data-cotizador-ciudad placeholder="Ej. Cartagena">
           </div>
+        </div>
 
-          <div class="cotizador-step">
-            <p class="cotizador-step-label">4 · Fecha y hora de tu videollamada</p>
-            <div class="cotizador-days" data-cotizador-fechas></div>
-            <div class="cotizador-slots" data-cotizador-horas></div>
-          </div>
+        <p class="cotizador-error" data-cotizador-error hidden></p>
 
-          <div class="cotizador-step">
-            <p class="cotizador-step-label">5 · Tus datos</p>
-            <div class="form-row">
-              <label for="cotizador-nombre">Nombres de los novios *</label>
-              <input type="text" id="cotizador-nombre" data-cotizador-nombre placeholder="Ej. María &amp; Andrés">
-            </div>
-            <div class="form-row">
-              <label for="cotizador-whatsapp">Tu WhatsApp (con código de país) *</label>
-              <input type="tel" id="cotizador-whatsapp" data-cotizador-whatsapp placeholder="Ej. 573001234567">
-            </div>
-            <div class="form-row">
-              <label for="cotizador-ciudad">Ciudad del evento</label>
-              <input type="text" id="cotizador-ciudad" data-cotizador-ciudad placeholder="Ej. Cartagena">
-            </div>
-          </div>
+        <button type="button" class="btn btn-primary cotizador-submit" data-cotizador-submit>Cotizar y agendar</button>
+        <p class="cotizador-note" data-cotizador-note>Al confirmar: se descarga tu cotización en PDF, se agenda tu videollamada y se abre WhatsApp con el resumen.</p>
 
-          <p class="cotizador-error" data-cotizador-error hidden></p>
-
-          <button type="button" class="btn btn-primary cotizador-submit" data-cotizador-submit>Cotizar y agendar</button>
-          <p class="cotizador-note" data-cotizador-note>Al confirmar: se descarga tu cotización en PDF, se agenda tu videollamada y se abre WhatsApp con el resumen.</p>
-
-          <p class="cotizador-success" data-cotizador-success hidden></p>
-        </aside>
+        <p class="cotizador-success" data-cotizador-success hidden></p>
       </div>
 
       <div class="videos-block reveal">
