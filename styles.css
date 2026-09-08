@@ -219,6 +219,14 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 }
 .nav-cta:hover { border-color: var(--accent); color: var(--accent); }
 
+.nav-servicios { display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+.nav-badge {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.06em;
+  text-transform: uppercase; line-height: 1;
+  padding: 0.22rem 0.55rem; border-radius: 100px;
+  background: var(--accent); color: var(--accent-ink);
+}
+
 .nav-toggle {
   display: flex; flex-direction: column; justify-content: center; gap: 5px;
   width: 40px; height: 40px;
