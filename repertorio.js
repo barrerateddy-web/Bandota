@@ -401,8 +401,8 @@
     function buildMessage(names, date) {
       var lines = [];
       lines.push("Selección de repertorio — LA BANDOTA");
-      if (names) lines.push("Novios: " + names);
-      if (date) lines.push("Fecha de la boda: " + date);
+      if (names) lines.push("Contacto: " + names);
+      if (date) lines.push("Fecha del evento: " + date);
       lines.push("");
 
       var priorityEntries = [];
@@ -555,9 +555,9 @@
         if (!plannerPhone) { plannerPhoneInput.reportValidity(); return; }
         window.open("https://wa.me/" + plannerPhone + "?text=" + encodeURIComponent(message), "_blank", "noopener");
         logToSheet({ type: "whatsapp-planner", names: nd.names, date: nd.date, total: selected.size, priority: priority.size, blocked: blocked.size, message: message, ts: new Date().toISOString() });
-        showSuccess("Se abrió WhatsApp con tu selección lista para tu wedding planner. Confirma el envío allá.");
+        showSuccess("Se abrió WhatsApp con tu selección lista para tu organizador de eventos. Confirma el envío allá.");
       } else if (target === emailBtn) {
-        var params = ["subject=" + encodeURIComponent("Selección de repertorio — " + (nd.names || "Boda LA BANDOTA"))];
+        var params = ["subject=" + encodeURIComponent("Selección de repertorio — " + (nd.names || "Evento LA BANDOTA"))];
         if (plannerEmailInput.value.trim()) params.push("cc=" + encodeURIComponent(plannerEmailInput.value.trim()));
         params.push("body=" + encodeURIComponent(message));
         window.location.href = "mailto:" + COMPANY_EMAIL + "?" + params.join("&");

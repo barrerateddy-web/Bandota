@@ -101,7 +101,7 @@ function localDateTimeToUtc(fecha, hora, offsetMinutes) {
 
 function buildDescription(body) {
   var lines = ["Cotización LA BANDOTA"];
-  if (body.nombre) lines.push("Novios: " + body.nombre);
+  if (body.nombre) lines.push("Contacto: " + body.nombre);
   if (body.ciudad) lines.push("Ciudad del evento: " + body.ciudad);
   (body.items || []).forEach(function (it) { lines.push("- " + it.nombre + ": " + it.detalle); });
   if (body.total) lines.push("Total estimado: $" + Math.round(body.total).toLocaleString("es-CO") + " COP");

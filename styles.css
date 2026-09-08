@@ -1225,48 +1225,104 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 .rep-modal-success .btn { width: 100%; }
 
 /* =============================================================
-   27. Cotizador — oferta real + módulo de cotización (Bodas)
+   27. Cotizador — oferta real + módulo de cotización (Servicios)
    ============================================================= */
-.cotizador-block { margin-bottom: 3rem; }
+
+/* Página centrada: kickers, títulos y subtítulos de cada sección */
+#portafolio > .container > .kicker,
+#repertorio > .container > .kicker,
+#otros > .container > .kicker,
+#portafolio > .container > .section-title,
+#repertorio > .container > .section-title,
+#otros > .container > .section-title,
+#portafolio > .container > .section-sub,
+#repertorio > .container > .section-sub,
+#otros > .container > .section-sub {
+  text-align: center; margin-inline: auto;
+}
+#portafolio > .container > .section-sub,
+#repertorio > .container > .section-sub { max-width: 62ch; }
+#portafolio .videos-block { text-align: center; }
+#portafolio .videos-block .hero-actions { justify-content: center !important; }
+#portafolio .gallery-grid, #portafolio .videos-note { margin-inline: auto; }
+
+/* Cada paso queda delimitado como un panel propio, con número + explicación */
+.cotizador-block {
+  margin-bottom: 2.5rem; padding: clamp(1.5rem, 3vw, 2.2rem);
+  border: 1px solid var(--line); border-radius: 24px; background: var(--card);
+}
+.cotizador-block-head, .cotizador-modulo > .cotizador-block-head {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 0.7rem; margin-bottom: 1.8rem;
+}
+.cotizador-block-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  font-family: var(--font-mono); font-weight: 600; font-size: 0.95rem;
+}
 .cotizador-block-label {
   font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
 }
+.cotizador-block-help { color: var(--ink-soft); font-size: 0.92rem; max-width: 52ch; margin-inline: auto; }
 .cotizador-block-sublabel {
   font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--mute); margin: 1.4rem 0 0.9rem;
+  text-transform: uppercase; color: var(--mute); margin: 1.4rem 0 0.9rem; text-align: center;
 }
 .cotizador-block-sublabel:first-of-type { margin-top: 0; }
 
 .cotizador-modulo {
   padding: clamp(1.5rem, 3vw, 2.4rem);
   border: 1px solid var(--line); border-radius: 24px; background: var(--card);
-  max-width: 640px;
+  max-width: 640px; margin-inline: auto; text-align: center;
 }
-.cotizador-modulo-title { font-size: 1.3rem; margin-bottom: 1.5rem; }
+.cotizador-modulo-title { font-size: 1.3rem; }
+.cotizador-modulo .cotizador-block-head { margin-bottom: 1.6rem; }
 
-.cotizador-step { margin-bottom: 1.6rem; }
+.cotizador-step { margin-bottom: 1.6rem; text-align: left; }
 .cotizador-step-label {
   font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--mute); margin-bottom: 0.7rem;
+  text-transform: uppercase; color: var(--mute); margin-bottom: 0.7rem; text-align: center;
 }
 
 .cotizador-options {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.9rem;
+  justify-content: center;
 }
 .cotizador-option {
-  display: flex; flex-direction: column; gap: 0.3rem; text-align: left;
-  padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 14px;
+  position: relative; display: flex; flex-direction: column; gap: 0.3rem; text-align: left;
+  padding: 1.3rem 1.2rem 1.1rem; border: 1px solid var(--line); border-radius: 14px;
   background: var(--bg-2); width: 100%; height: 100%;
   transition: border-color .25s var(--ease-out), background .25s var(--ease-out);
 }
 .cotizador-option:hover { border-color: var(--ink-soft); }
 .cotizador-option.is-selected { border-color: var(--accent); background: var(--accent-soft); }
-.cotizador-option-name { font-weight: 600; font-size: 1rem; color: var(--ink); }
+
+/* Casilla siempre visible (círculo vacío) que se convierte en chulo al seleccionar,
+   además del cambio de borde/fondo — no reemplaza esa señal, la refuerza. */
+.cotizador-option-check {
+  position: absolute; top: 0.9rem; right: 0.9rem;
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--line); background: transparent;
+  transition: border-color .25s var(--ease-out), background .25s var(--ease-out);
+}
+.cotizador-option-check::after {
+  content: "";
+  position: absolute; top: 50%; left: 50%;
+  width: 11px; height: 6px;
+  border-left: 2px solid var(--accent-ink); border-bottom: 2px solid var(--accent-ink);
+  transform: translate(-50%, -65%) rotate(-45deg) scale(0);
+  transition: transform .2s var(--ease-bounce);
+}
+.cotizador-option.is-selected .cotizador-option-check { background: var(--accent); border-color: var(--accent); }
+.cotizador-option.is-selected .cotizador-option-check::after { transform: translate(-50%, -65%) rotate(-45deg) scale(1); }
+
+.cotizador-option-name { font-weight: 600; font-size: 1rem; color: var(--ink); padding-right: 1.8rem; }
 .cotizador-option-desc { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; }
 .cotizador-option-meta { font-family: var(--font-mono); font-size: 0.74rem; color: var(--gold); margin-top: 0.2rem; }
 
-.cotizador-days, .cotizador-slots { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.cotizador-days, .cotizador-slots { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
 .cotizador-days { margin-bottom: 0.8rem; }
 .cotizador-day, .cotizador-slot {
   font-family: var(--font-mono); font-size: 0.75rem; white-space: nowrap;

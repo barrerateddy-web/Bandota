@@ -59,7 +59,8 @@
 
     function optionCardHtml(id, nombre, descripcion, meta, isActive) {
       return (
-        '<button type="button" class="cotizador-option' + (isActive ? " is-selected" : "") + '" data-cotizador-value="' + id + '">' +
+        '<button type="button" class="cotizador-option' + (isActive ? " is-selected" : "") + '" data-cotizador-value="' + id + '" aria-pressed="' + (isActive ? "true" : "false") + '">' +
+          '<span class="cotizador-option-check" aria-hidden="true"></span>' +
           '<span class="cotizador-option-name">' + nombre + '</span>' +
           '<span class="cotizador-option-desc">' + descripcion + '</span>' +
           (meta ? '<span class="cotizador-option-meta">' + meta + '</span>' : "") +
@@ -188,8 +189,8 @@
     /* -------- WhatsApp message -------- */
     function buildMessage(items, total, meetInfo) {
       var lines = [];
-      lines.push("Solicitud de cotización — LA BANDOTA (Bodas)");
-      if (state.nombre) lines.push("Novios: " + state.nombre);
+      lines.push("Solicitud de cotización — LA BANDOTA");
+      if (state.nombre) lines.push("Contacto: " + state.nombre);
       if (state.ciudad) lines.push("Ciudad del evento: " + state.ciudad);
       lines.push("");
       lines.push("Selección:");
@@ -253,7 +254,7 @@
         doc.setFont("helvetica", "normal");
         doc.setFontSize(11);
         doc.setTextColor(220, 190, 150);
-        doc.text("Cotización de servicio — Bodas", margin, 70);
+        doc.text("Cotización de servicio", margin, 70);
         doc.setTextColor(200, 190, 180);
         doc.setFontSize(9);
         doc.text("director@bandota.com  ·  +57 304 477 7225", margin, 88);
@@ -274,7 +275,7 @@
         doc.setFont("helvetica", "normal");
         doc.setFontSize(10.5);
         doc.setTextColor(60, 50, 45);
-        if (state.nombre) { doc.text("Novios: " + state.nombre, margin, y); y += 16; }
+        if (state.nombre) { doc.text("Contacto: " + state.nombre, margin, y); y += 16; }
         if (state.ciudad) { doc.text("Ciudad del evento: " + state.ciudad, margin, y); y += 16; }
         if (state.fecha && state.hora) { doc.text("Videollamada: " + state.fecha + " a las " + state.hora + " (hora Colombia)", margin, y); y += 16; }
         if (meetInfo && meetInfo.meetLink) { doc.text("Link de Meet: " + meetInfo.meetLink, margin, y); y += 16; }
@@ -319,7 +320,7 @@
         doc.setTextColor(muteColor[0], muteColor[1], muteColor[2]);
         doc.text("Cotización preliminar, sujeta a confirmación de fecha y disponibilidad. Válida por 15 días.", margin, y, { maxWidth: pageWidth - margin * 2 });
 
-        var fileName = "Cotizacion-LaBandota-" + (state.nombre ? state.nombre.replace(/[^a-z0-9]+/gi, "-") : "Boda") + ".pdf";
+        var fileName = "Cotizacion-LaBandota-" + (state.nombre ? state.nombre.replace(/[^a-z0-9]+/gi, "-") : "Evento") + ".pdf";
         doc.save(fileName);
         return true;
       });
@@ -372,7 +373,7 @@
       state.ciudad = ciudadInput.value.trim();
 
       if (!state.formatoId && !state.packId) { showError("Elige un formato o un pack para continuar."); return; }
-      if (!state.nombre) { showError("Cuéntanos los nombres de los novios."); nombreInput.focus(); return; }
+      if (!state.nombre) { showError("Cuéntanos tu nombre de contacto."); nombreInput.focus(); return; }
       if (!state.whatsapp) { showError("Necesitamos tu WhatsApp para enviarte la cotización."); whatsappInput.focus(); return; }
       if (!state.fecha || !state.hora) { showError("Elige fecha y hora para la videollamada."); return; }
 
