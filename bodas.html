@@ -63,28 +63,62 @@
     </div>
   </section>
 
-  <section class="section" id="portafolio">
+  <section class="section" id="portafolio" data-cotizador>
     <div class="container">
-      <p class="kicker reveal">Portafolio</p>
-      <h2 class="section-title reveal" data-split="lines">Formatos para<br>cada momento.</h2>
-      <p class="section-sub reveal">Armamos la banda a la medida del momento del evento — de la ceremonia al último baile de la noche.</p>
+      <p class="kicker reveal">Portafolio y cotización</p>
+      <h2 class="section-title reveal" data-split="lines">Tu oferta,<br>a la medida de tu boda.</h2>
+      <p class="section-sub reveal">Esta es la oferta real de LA BANDOTA. Elige tu formato o un pack completo, agrega servicios, y agenda una videollamada para confirmar todo — recibes tu cotización formal al instante.</p>
 
-      <div class="format-grid reveal">
-        <div class="format-card">
-          <span class="format-size">4–6 músicos</span>
-          <h3>Combo Acústico</h3>
-          <p>Ideal para ceremonia, cóctel o el brindis — formato reducido, sonido cálido.</p>
-        </div>
-        <div class="format-card">
-          <span class="format-size">8–10 músicos</span>
-          <h3>Banda Clásica</h3>
-          <p>El formato más solicitado para la recepción — voces, metales y sección rítmica.</p>
-        </div>
-        <div class="format-card">
-          <span class="format-size">15 músicos</span>
-          <h3>Banda Completa</h3>
-          <p>La formación entera en tarima — el show de LA BANDOTA a toda su potencia.</p>
-        </div>
+      <div class="cotizador-grid reveal">
+        <div class="cotizador-oferta" data-cotizador-oferta></div>
+
+        <aside class="cotizador-modulo" id="cotizaciones">
+          <h3 class="cotizador-modulo-title">Cotiza y agenda tu llamada</h3>
+
+          <div class="cotizador-step">
+            <p class="cotizador-step-label">1 · Elige tu formato</p>
+            <div class="cotizador-options" data-cotizador-formatos></div>
+          </div>
+
+          <div class="cotizador-step">
+            <p class="cotizador-step-label">2 · O un pack completo (reemplaza el formato)</p>
+            <div class="cotizador-options" data-cotizador-packs></div>
+          </div>
+
+          <div class="cotizador-step">
+            <p class="cotizador-step-label">3 · Servicios adicionales (opcional)</p>
+            <div class="cotizador-options" data-cotizador-servicios></div>
+          </div>
+
+          <div class="cotizador-step">
+            <p class="cotizador-step-label">4 · Fecha y hora de tu videollamada</p>
+            <div class="cotizador-days" data-cotizador-fechas></div>
+            <div class="cotizador-slots" data-cotizador-horas></div>
+          </div>
+
+          <div class="cotizador-step">
+            <p class="cotizador-step-label">5 · Tus datos</p>
+            <div class="form-row">
+              <label for="cotizador-nombre">Nombres de los novios *</label>
+              <input type="text" id="cotizador-nombre" data-cotizador-nombre placeholder="Ej. María &amp; Andrés">
+            </div>
+            <div class="form-row">
+              <label for="cotizador-whatsapp">Tu WhatsApp (con código de país) *</label>
+              <input type="tel" id="cotizador-whatsapp" data-cotizador-whatsapp placeholder="Ej. 573001234567">
+            </div>
+            <div class="form-row">
+              <label for="cotizador-ciudad">Ciudad del evento</label>
+              <input type="text" id="cotizador-ciudad" data-cotizador-ciudad placeholder="Ej. Cartagena">
+            </div>
+          </div>
+
+          <p class="cotizador-error" data-cotizador-error hidden></p>
+
+          <button type="button" class="btn btn-primary cotizador-submit" data-cotizador-submit>Cotizar y agendar</button>
+          <p class="cotizador-note" data-cotizador-note>Al confirmar: se descarga tu cotización en PDF, se agenda tu videollamada y se abre WhatsApp con el resumen.</p>
+
+          <p class="cotizador-success" data-cotizador-success hidden></p>
+        </aside>
       </div>
 
       <div class="videos-block reveal">
@@ -112,77 +146,11 @@
       </div>
 
       <div class="videos-block reveal">
-        <p class="videos-label">Videos de Instagram</p>
-        <div class="videos-grid">
-          <div class="video-placeholder">
-            <span class="video-play" aria-hidden="true">▶</span>
-            <span class="video-title">Reel de boda</span>
-            <span class="video-tag">Próximamente</span>
-          </div>
-          <div class="video-placeholder">
-            <span class="video-play" aria-hidden="true">▶</span>
-            <span class="video-title">Momento del brindis</span>
-            <span class="video-tag">Próximamente</span>
-          </div>
-          <div class="video-placeholder">
-            <span class="video-play" aria-hidden="true">▶</span>
-            <span class="video-title">Cierre de fiesta</span>
-            <span class="video-tag">Próximamente</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="videos-block reveal">
-        <p class="videos-label">Testimonios</p>
-        <div class="testimonial-grid">
-          <div class="testimonial-card">
-            <span class="testimonial-mark">"</span>
-            <span>Testimonio de novios — próximamente.</span>
-          </div>
-          <div class="testimonial-card">
-            <span class="testimonial-mark">"</span>
-            <span>Testimonio de novios — próximamente.</span>
-          </div>
-          <div class="testimonial-card">
-            <span class="testimonial-mark">"</span>
-            <span>Testimonio de novios — próximamente.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-dim" id="cotizaciones">
-    <div class="container">
-      <div class="booking-grid">
-        <div class="booking-head">
-          <p class="kicker reveal">Cotizaciones</p>
-          <h2 class="section-title reveal" data-split="lines">Precio bajo<br>consulta.</h2>
-          <p class="section-sub reveal">El valor depende de la fecha, la ciudad, la duración y el formato de banda. Escríbenos por WhatsApp con los detalles de tu boda y te enviamos una propuesta a la medida — sin compromiso.</p>
-          <a href="https://wa.me/573044777225?text=Hola%20LA%20BANDOTA%2C%20quiero%20cotizar%20la%20banda%20para%20mi%20boda" target="_blank" rel="noopener" class="btn btn-primary reveal">Cotizar por WhatsApp</a>
-        </div>
-
-        <div class="booking-types reveal">
-          <div class="booking-card">
-            <span class="booking-num">01</span>
-            <h3>Cuéntanos la fecha</h3>
-            <p>Fecha, ciudad y venue de tu boda.</p>
-          </div>
-          <div class="booking-card">
-            <span class="booking-num">02</span>
-            <h3>Elige el formato</h3>
-            <p>Del combo acústico a la banda completa.</p>
-          </div>
-          <div class="booking-card">
-            <span class="booking-num">03</span>
-            <h3>Recibe tu propuesta</h3>
-            <p>Cotización a la medida, sin compromiso.</p>
-          </div>
-          <div class="booking-card">
-            <span class="booking-num">04</span>
-            <h3>Reserva la fecha</h3>
-            <p>Aparta tu día con anticipación — las fechas se llenan rápido.</p>
-          </div>
+        <p class="videos-label">Escúchanos en vivo</p>
+        <p class="videos-note">Covers en vivo — "La Gozadera", "La Bilirrubina", "Si Algún Día la Ves" — y nuestro sencillo "Cariño", disponibles en Spotify y YouTube.</p>
+        <div class="hero-actions" style="justify-content: flex-start; margin-top: 1rem;">
+          <a href="https://www.youtube.com/@Teddy.LaBandota" target="_blank" rel="noopener" class="btn btn-ghost">Ver en YouTube</a>
+          <a href="https://open.spotify.com/search/Teddy%20Barrera%20La%20Bandota" target="_blank" rel="noopener" class="btn btn-ghost">Escuchar en Spotify</a>
         </div>
       </div>
     </div>
@@ -308,7 +276,7 @@
     <a href="index.html" class="footer-logo">
       <img src="assets/img/logo-bandota-nav.webp" alt="Teddy & LA BANDOTA" style="height:28px;width:auto;" />
     </a>
-    <a href="mailto:barrerateddy@gmail.com" class="footer-email">barrerateddy@gmail.com</a>
+    <a href="mailto:director@bandota.com" class="footer-email">director@bandota.com</a>
     <p class="footer-copy">&copy; 2026 Teddy &amp; LA BANDOTA. Todos los derechos reservados.</p>
   </div>
 </footer>
@@ -319,5 +287,8 @@
 <script defer src="main.js?v=20260813"></script>
 <script defer src="repertorio-data.js?v=20260819d"></script>
 <script defer src="repertorio.js?v=20260819i"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script defer src="cotizador-data.js?v=20260908a"></script>
+<script defer src="cotizador.js?v=20260908a"></script>
 </body>
 </html>

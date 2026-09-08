@@ -1,0 +1,109 @@
+/**
+ * Backend del cotizador de LA BANDOTA (Bodas).
+ * -----------------------------------------------------------------
+ * Qué hace: recibe la cotización desde la web, crea un evento en tu
+ * Google Calendar con un link de Google Meet, guarda el registro en
+ * esta misma hoja de cálculo, y responde con el link de Meet para
+ * que la web lo incluya en el PDF y en el mensaje de WhatsApp.
+ *
+ * CÓMO ACTIVARLO (una sola vez, ~10 minutos):
+ * 1. Crea una hoja de cálculo nueva en Google Sheets (ej. "Bandota — Cotizaciones").
+ * 2. Extensiones > Apps Script.
+ * 3. Borra el contenido de Code.gs y pega todo este archivo.
+ * 4. A la izquierda, en "Servicios" (ícono +), añade el servicio "Calendar API"
+ *    (el identificador debe quedar como "Calendar").
+ * 5. Arriba a la derecha: Implementar > Nueva implementación.
+ *    - Tipo: Aplicación web
+ *    - Ejecutar como: Yo (tu cuenta)
+ *    - Quién tiene acceso: Cualquier usuario
+ * 6. Autoriza los permisos que te pida (Calendar + Sheets).
+ * 7. Copia la URL que termina en /exec.
+ * 8. Pégala en cotizador.js, en la constante COTIZADOR_WEBHOOK_URL.
+ * 9. Sube el cambio (o pídeme que lo haga).
+ *
+ * A partir de ahí, cada cotización real crea el evento en tu Calendar,
+ * genera el Meet, y queda registrada en la pestaña "Cotizaciones" de
+ * esta misma hoja.
+ */
+
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  try {
+    lock.tryLock(10000);
+    var body = JSON.parse(e.postData.contents);
+
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Cotizaciones");
+    if (!sheet) {
+      sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Cotizaciones");
+    }
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Fecha registro", "Tipo", "Nombre", "WhatsApp", "Ciudad", "Fecha evento", "Hora", "Detalle", "Total (COP)", "Link de Meet"]);
+    }
+
+    var offsetMinutes = typeof body.utcOffsetMinutes === "number" ? body.utcOffsetMinutes : -300;
+    var meetLink = "";
+    var eventId = "";
+
+    if (body.fecha && body.hora) {
+      try {
+        var startUtc = localDateTimeToUtc(body.fecha, body.hora, offsetMinutes);
+        var endUtc = new Date(startUtc.getTime() + 30 * 60000);
+
+        var event = {
+          summary: "Videollamada — Cotización LA BANDOTA" + (body.nombre ? " (" + body.nombre + ")" : ""),
+          description: buildDescription(body),
+          start: { dateTime: startUtc.toISOString() },
+          end: { dateTime: endUtc.toISOString() },
+          conferenceData: {
+            createRequest: {
+              requestId: Utilities.getUuid(),
+              conferenceSolutionKey: { type: "hangoutsMeet" }
+            }
+          }
+        };
+        var created = Calendar.Events.insert(event, "primary", { conferenceDataVersion: 1 });
+        meetLink = created.hangoutLink || "";
+        eventId = created.id || "";
+      } catch (calErr) {
+        // Si falla Calendar (p. ej. el servicio no quedó habilitado), seguimos
+        // igual: la cotización se registra y la web avisa que Meet se
+        // confirma manualmente por WhatsApp.
+      }
+    }
+
+    var itemsText = (body.items || []).map(function (it) {
+      return it.nombre + " (" + it.detalle + ")";
+    }).join(" | ");
+
+    sheet.appendRow([
+      new Date(), body.tipo || "", body.nombre || "", body.whatsapp || "",
+      body.ciudad || "", body.fecha || "", body.hora || "", itemsText,
+      body.total || "", meetLink
+    ]);
+
+    return ContentService.createTextOutput(JSON.stringify({ ok: true, meetLink: meetLink, eventId: eventId }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function localDateTimeToUtc(fecha, hora, offsetMinutes) {
+  var parts = fecha.split("-").map(Number);
+  var hm = hora.split(":").map(Number);
+  var wallClockMillis = Date.UTC(parts[0], parts[1] - 1, parts[2], hm[0], hm[1]);
+  return new Date(wallClockMillis - offsetMinutes * 60000);
+}
+
+function buildDescription(body) {
+  var lines = ["Cotización LA BANDOTA"];
+  if (body.nombre) lines.push("Novios: " + body.nombre);
+  if (body.ciudad) lines.push("Ciudad del evento: " + body.ciudad);
+  (body.items || []).forEach(function (it) { lines.push("- " + it.nombre + ": " + it.detalle); });
+  if (body.total) lines.push("Total estimado: $" + Math.round(body.total).toLocaleString("es-CO") + " COP");
+  return lines.join("\n");
+}
