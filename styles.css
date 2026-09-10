@@ -1344,3 +1344,44 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
   margin-top: 1rem; padding: 0.9rem 1rem; border-radius: 12px;
   background: rgba(58,125,92,0.16); color: var(--ink); font-size: 0.88rem;
 }
+
+/* =============================================================
+   28. Modo edición (?edit=1) — panel flotante + resaltado de texto editable
+   ============================================================= */
+[data-edit-id].is-editable {
+  outline: 1.5px dashed rgba(232, 182, 76, 0.5);
+  outline-offset: 4px;
+  border-radius: 6px;
+  cursor: text;
+  transition: outline-color .2s var(--ease-out), background .2s var(--ease-out);
+}
+[data-edit-id].is-editable:hover { outline-color: var(--gold); background: rgba(232, 182, 76, 0.08); }
+[data-edit-id].is-editable:focus { outline: 2px solid var(--gold); outline-offset: 4px; background: rgba(232, 182, 76, 0.12); }
+
+#editor-mode-panel {
+  position: fixed; left: 50%; bottom: 1.25rem; transform: translateX(-50%);
+  z-index: 999; max-width: calc(100vw - 2rem);
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 16px 40px -12px rgba(0,0,0,0.65);
+  font-family: var(--font-sans); font-size: 0.88rem; color: var(--ink);
+}
+.editor-mode-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
+.editor-mode-row[hidden] { display: none; }
+#editor-mode-panel input[type="password"] {
+  font: inherit; color: var(--ink); background: var(--bg-2);
+  border: 1px solid var(--line); border-radius: 10px; padding: 0.55rem 0.8rem;
+  min-width: 260px;
+}
+#editor-mode-panel button {
+  font: inherit; font-weight: 600; color: var(--accent-ink); background: var(--accent);
+  border: 0; border-radius: 100px; padding: 0.55rem 1.1rem; cursor: pointer;
+  transition: transform .2s var(--ease-out);
+}
+#editor-mode-panel button:hover { transform: translateY(-2px); }
+#editor-mode-panel button:disabled { opacity: 0.6; cursor: default; transform: none; }
+#editor-mode-panel [data-editor-forget-token] {
+  background: transparent; color: var(--mute); border: 1px solid var(--line); font-weight: 500;
+}
+#editor-mode-panel [data-editor-status] { color: var(--ink-soft); }
+#editor-mode-panel a[data-editor-exit] { color: var(--mute); text-decoration: underline; }
