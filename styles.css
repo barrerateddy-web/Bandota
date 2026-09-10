@@ -1385,3 +1385,41 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 }
 #editor-mode-panel [data-editor-status] { color: var(--ink-soft); }
 #editor-mode-panel a[data-editor-exit] { color: var(--mute); text-decoration: underline; }
+
+/* =============================================================
+   29. Carrusel de banners (Home) — rotación con crossfade
+   ============================================================= */
+.banner-carousel {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 62vh, 640px);
+  margin-top: var(--nav-h);
+  overflow: hidden;
+  background: var(--bg-2);
+}
+.banner-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease-out);
+  pointer-events: none;
+}
+.banner-slide.is-active { opacity: 1; pointer-events: auto; z-index: 1; }
+.banner-slide img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.banner-carousel-dots {
+  position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%);
+  z-index: 2;
+  display: flex; gap: 0.55rem;
+}
+.banner-carousel-dots button {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid rgba(255,255,255,0.6);
+  padding: 0; cursor: pointer;
+  transition: background .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.banner-carousel-dots button.is-active { background: var(--gold); border-color: var(--gold); transform: scale(1.15); }
+@media (prefers-reduced-motion: reduce) {
+  .banner-slide { transition: none; }
+}

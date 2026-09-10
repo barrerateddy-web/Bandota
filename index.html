@@ -13,9 +13,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 
+<link rel="preload" as="image" href="assets/img/home-banner-1.webp" fetchpriority="high" />
 <link rel="preload" as="image" href="assets/img/hero-stage-bg.webp" fetchpriority="high" />
 <link rel="preload" as="image" href="assets/img/ted.webp" fetchpriority="high" />
-<link rel="stylesheet" href="styles.css?v=20260826" />
+<link rel="stylesheet" href="styles.css?v=20260910a" />
 </head>
 <body data-repo-path="index.html">
 
@@ -51,6 +52,16 @@
 </a>
 
 <main id="main">
+
+  <section class="banner-carousel" data-banner-carousel aria-label="Banners LA BANDOTA">
+    <div class="banner-slide is-active">
+      <img src="assets/img/home-banner-1.webp" alt="Tu boda, con la ORQUESTA que todos recuerdan." loading="eager" fetchpriority="high" />
+    </div>
+    <div class="banner-slide">
+      <img src="assets/img/home-banner-1.webp" alt="Tu boda, con la ORQUESTA que todos recuerdan." loading="lazy" />
+    </div>
+    <div class="banner-carousel-dots"></div>
+  </section>
 
   <section class="hero hero-split" id="top">
     <div class="hero-split-inner">
@@ -154,6 +165,7 @@
 <script defer src="lib/ScrollTrigger.min.js"></script>
 <script defer src="lib/manifest.js"></script>
 <script defer src="main.js?v=20260813"></script>
+<script defer src="banner-carousel.js?v=20260910a"></script>
 <script defer src="editor-mode.js?v=20260910a"></script>
 </body>
 </html>
