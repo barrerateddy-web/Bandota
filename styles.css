@@ -1391,13 +1391,14 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 /* =============================================================
    29. Carrusel de banners (Home) — rotación con crossfade
    ============================================================= */
+.banner-carousel-section { padding-top: calc(var(--nav-h) + 1.75rem); padding-bottom: 0; }
 .banner-carousel {
   position: relative;
   width: 100%;
-  height: clamp(320px, 62vh, 640px);
-  margin-top: var(--nav-h);
+  aspect-ratio: 2533 / 1423;
+  border-radius: 28px;
   overflow: hidden;
-  background: var(--bg-2);
+  background: #2a1b6b;
 }
 .banner-slide {
   position: absolute; inset: 0;
@@ -1408,6 +1409,40 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 .banner-slide.is-active { opacity: 1; pointer-events: auto; z-index: 1; }
 .banner-slide img {
   width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.banner-slide-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, #d07803 0%, rgba(43,25,105,0.86) 32%, rgba(48,30,120,0.35) 58%, rgba(48,30,120,0) 75%);
+}
+.banner-slide-content {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+}
+.banner-copy {
+  width: min(52%, 720px);
+  padding: 0 clamp(20px, 5%, 88px);
+  display: flex; flex-direction: column; gap: clamp(10px, 1.6vw, 22px);
+}
+.banner-copy h1 {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  color: #fff;
+  font-size: clamp(22px, 4.3vw, 90px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+.banner-copy h1 b { font-weight: 700; }
+.banner-copy p {
+  margin: 0;
+  color: #ece6ff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.35vw, 22px);
+  line-height: 1.45;
+}
+@media (max-width: 640px) {
+  .banner-copy { width: 88%; padding: 0 1.3rem; }
 }
 .banner-carousel-dots {
   position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%);

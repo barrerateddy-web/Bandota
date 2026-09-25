@@ -12,11 +12,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Montserrat:wght@400;500&display=swap" />
 
 <link rel="preload" as="image" href="assets/img/home-banner-1.webp" fetchpriority="high" />
 <link rel="preload" as="image" href="assets/img/hero-stage-bg.webp" fetchpriority="high" />
 <link rel="preload" as="image" href="assets/img/ted.webp" fetchpriority="high" />
-<link rel="stylesheet" href="styles.css?v=20260925a" />
+<link rel="stylesheet" href="styles.css?v=20260925b" />
 </head>
 <body data-repo-path="index.html">
 
@@ -53,14 +54,32 @@
 
 <main id="main">
 
-  <section class="banner-carousel" data-banner-carousel aria-label="Banners LA BANDOTA">
-    <div class="banner-slide is-active">
-      <img src="assets/img/home-banner-1.webp" alt="Tu boda, con la ORQUESTA que todos recuerdan." loading="eager" fetchpriority="high" />
+  <section class="section banner-carousel-section">
+    <div class="container">
+      <div class="banner-carousel" data-banner-carousel aria-label="Banners LA BANDOTA">
+        <div class="banner-slide is-active">
+          <img src="assets/img/home-banner-1.webp" alt="Tu boda, con la ORQUESTA que todos recuerdan." loading="eager" fetchpriority="high" />
+          <div class="banner-slide-scrim"></div>
+          <div class="banner-slide-content">
+            <div class="banner-copy">
+              <h1 data-edit-id="home-banner-1-title">Tu boda, <br><b>con la ORQUESTA</b><br>que todos recuerdan.</h1>
+              <p data-edit-id="home-banner-1-sub">Hazlo con amor y jamás te olvidarán.</p>
+            </div>
+          </div>
+        </div>
+        <div class="banner-slide">
+          <img src="assets/img/home-banner-1.webp" alt="Tu boda, con la ORQUESTA que todos recuerdan." loading="lazy" />
+          <div class="banner-slide-scrim"></div>
+          <div class="banner-slide-content">
+            <div class="banner-copy">
+              <h1 data-edit-id="home-banner-2-title">Tu boda, <br><b>con la ORQUESTA</b><br>que todos recuerdan.</h1>
+              <p data-edit-id="home-banner-2-sub">Hazlo con amor y jamás te olvidarán.</p>
+            </div>
+          </div>
+        </div>
+        <div class="banner-carousel-dots"></div>
+      </div>
     </div>
-    <div class="banner-slide">
-      <img src="assets/img/home-banner-1.webp" alt="Tu boda, con la ORQUESTA que todos recuerdan." loading="lazy" />
-    </div>
-    <div class="banner-carousel-dots"></div>
   </section>
 
   <section class="hero hero-split" id="top">
