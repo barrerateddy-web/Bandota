@@ -358,7 +358,9 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 }
 @media (min-width: 960px) {
   .hero-split-inner { grid-template-columns: 1.15fr 0.85fr; gap: 3.5rem; }
+  .hero-split-inner:not(:has(.hero-split-media)) { grid-template-columns: 1fr; }
 }
+.hero-split-inner:not(:has(.hero-split-media)) .hero-split-text { max-width: 760px; }
 .hero-split-text { max-width: 600px; }
 .hero-split-text .hero-sub { margin-inline: 0; }
 .hero-split-text .hero-actions { justify-content: flex-start; }
@@ -1422,4 +1424,18 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 .banner-carousel-dots button.is-active { background: var(--gold); border-color: var(--gold); transform: scale(1.15); }
 @media (prefers-reduced-motion: reduce) {
   .banner-slide { transition: none; }
+}
+
+/* =============================================================
+   30. Despedida — animación del oso al final del Home
+   ============================================================= */
+.section-tedbear { padding-top: 0; }
+.tedbear-outro {
+  display: flex; align-items: flex-end; justify-content: center;
+  height: clamp(300px, 46vh, 560px);
+}
+.tedbear-outro video {
+  height: 100%; width: auto; max-width: 100%;
+  object-fit: contain; object-position: bottom center;
+  filter: drop-shadow(0 30px 50px rgba(0,0,0,0.6));
 }
