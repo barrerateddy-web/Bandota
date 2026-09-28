@@ -1,7 +1,7 @@
 /* =============================================================
    Carrusel de banners — Home
-   Crossfade automático entre slides. Autoplay cada 5s, pausa al
-   pasar el mouse, navegación por puntos.
+   Transición con zoom + asentamiento entre slides. Autoplay cada
+   6.5s, pausa al pasar el mouse, navegación por puntos.
    ============================================================= */
 (function () {
   "use strict";
@@ -14,7 +14,7 @@
   if (slides.length < 2) return;
 
   var current = 0;
-  var intervalMs = 5000;
+  var intervalMs = 6500;
   var timer = null;
 
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
