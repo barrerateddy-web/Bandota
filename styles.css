@@ -1485,3 +1485,48 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
   object-fit: contain; object-position: bottom center;
   filter: drop-shadow(0 30px 50px rgba(0,0,0,0.6));
 }
+
+/* =============================================================
+   31. Pasarela de videos (página Videos) — carrusel de Instagram
+   ============================================================= */
+.video-runway {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.25rem; margin-top: 2rem;
+}
+.runway-viewport {
+  width: min(400px, 82vw);
+  overflow: hidden;
+  border-radius: 20px;
+}
+.runway-track {
+  display: flex;
+  transition: transform .55s var(--ease-out);
+}
+.runway-slide {
+  flex: 0 0 100%;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-inline: 2px;
+}
+.runway-slide .instagram-media { margin: 0 !important; }
+.runway-arrow {
+  flex: none;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font-size: 1.5rem; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .3s var(--ease-out), transform .3s var(--ease-out), opacity .3s var(--ease-out);
+}
+.runway-arrow:hover:not(:disabled) { background: var(--accent-soft); transform: translateY(-2px); }
+.runway-arrow:disabled { opacity: 0.35; cursor: default; }
+.runway-counter {
+  text-align: center; margin-top: 1rem;
+  color: var(--mute); font-family: var(--font-mono); font-size: 0.85rem;
+}
+@media (max-width: 640px) {
+  .video-runway { gap: 0.6rem; }
+  .runway-viewport { width: min(320px, 74vw); }
+  .runway-arrow { width: 36px; height: 36px; font-size: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .runway-track { transition: none; }
+}
