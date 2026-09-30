@@ -1,5 +1,23 @@
 # Registro de progreso — Arquitectura y navegación de LA BANDOTA
 
+## Sesión — 2026-09-30
+
+**Estado del sitio en esa fecha:** 6 páginas (se agregó Videos). Menú actualizado en todas.
+
+**Decisiones tomadas / construido:**
+- Transición del carrusel de banners del Home mejorada (zoom + asentamiento tipo "Ken Burns") — esto es lo que Teddy quiso decir con "hero muy impactante" en la sesión anterior. Publicado.
+- Página nueva `videos.html`: video destacado de YouTube ("La Gozadera") + pasarela/carrusel de 10 posts de Instagram bajo el título "¡Esto es BANDOTA!", con navegación por flechas que desliza el video actual hacia afuera y el siguiente hacia adentro. Agregada al menú entre "Universo Bandota" y "Blog" (Teddy puede pedir moverla más arriba si prefiere).
+- Blog: Teddy confirmó el foco en SEO ("sí, en Google") pero no dio temas/palabras clave propias — se le propuso una lista de 6 temas (búsqueda de banda en Cartagena, costos, hora loca, venues, temporada, bodas de destino para invitados internacionales) y quedó pendiente su decisión de cuáles escribir primero.
+
+**Preguntas abiertas / sin resolver:**
+- ¿Confirma Teddy la posición de "Videos" en el menú, o la mueve más arriba (más cerca de Inicio, como estaba en su lista original)?
+- Blog: ¿cuáles de los 6 temas propuestos escribir primero, o prefiere dar sus propios temas/palabras clave?
+- Posible visita futura con Higgsfield para una transición de banners más elaborada, una vez existan las 4 fotos reales (hoy solo hay 1, duplicada).
+
+**Próximos pasos:**
+- Retomar el blog SEO/SEM cuando Teddy decida los temas.
+- Revisar en algún momento si el orden del menú necesita ajuste.
+
 ## Sesión — 2026-09-28
 
 **Estado del sitio en esa fecha:** 5 páginas (Inicio, Sobre La Bandota, Servicios, Universo Bandota, Blog), menú idéntico en todas. Camino de cotización: Inicio → Servicios → cotizador (2 clics). Blog con 1 solo artículo.
