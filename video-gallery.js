@@ -1,21 +1,17 @@
 /* =============================================================
    Galería de videos — página Videos
-   Cuadrícula tipo perfil de Instagram: clic en una miniatura abre
-   el video en grande, con flechas para pasar al siguiente/anterior.
+   Cuadrícula con videos propios (no embeds de terceros): al pasar
+   el cursor se reproduce en silencio la miniatura; al hacer clic se
+   abre en grande sobre el fondo desenfocado, reproduciéndose de
+   inmediato con sonido, con flechas para pasar al siguiente/anterior.
    ============================================================= */
 (function () {
   "use strict";
 
   var grid = document.querySelector("[data-video-grid]");
   var lightbox = document.querySelector("[data-video-lightbox]");
-  if (!grid || !lightbox) return;
-
-  var items = Array.from(grid.querySelectorAll("[data-shortcode]"));
-
-  items.forEach(function (el) {
-    var img = el.querySelector("img");
-    if (img) img.addEventListener("error", function () { el.classList.add("is-fallback"); }, { once: true });
-  });
+  var items = window.VIDEO_GALLERY_DATA || [];
+  if (!grid || !lightbox || !items.length) return;
 
   var stage = lightbox.querySelector("[data-lightbox-stage]");
   var counter = lightbox.querySelector("[data-lightbox-counter]");
@@ -24,27 +20,72 @@
   var nextBtn = lightbox.querySelector("[data-lightbox-next]");
   var current = 0;
 
-  function processEmbeds(attemptsLeft) {
-    if (window.instgrm && window.instgrm.Embeds) {
-      window.instgrm.Embeds.process();
-    } else if (attemptsLeft > 0) {
-      setTimeout(function () { processEmbeds(attemptsLeft - 1); }, 400);
-    }
-  }
+  /* -------- Cuadrícula: una tarjeta por video, con preview en hover -------- */
+  items.forEach(function (item, i) {
+    var card = document.createElement("button");
+    card.type = "button";
+    card.className = "video-grid-item";
+    card.setAttribute("aria-label", "Reproducir: " + item.caption);
 
+    var video = document.createElement("video");
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    video.poster = item.poster;
+    video.src = item.video;
+
+    var playIcon = document.createElement("span");
+    playIcon.className = "video-grid-play";
+    playIcon.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(0,0,0,.35)" stroke="currentColor" stroke-width="1"/><path d="M10 8l6 4-6 4V8z"/></svg>';
+
+    var caption = document.createElement("span");
+    caption.className = "video-grid-caption";
+    caption.textContent = item.caption;
+
+    card.appendChild(video);
+    card.appendChild(playIcon);
+    card.appendChild(caption);
+
+    card.addEventListener("mouseenter", function () {
+      video.currentTime = 0;
+      video.play().catch(function () { /* el navegador puede bloquear autoplay; no pasa nada */ });
+    });
+    card.addEventListener("mouseleave", function () {
+      video.pause();
+      video.currentTime = 0;
+    });
+    card.addEventListener("click", function () { open(i); });
+
+    grid.appendChild(card);
+  });
+
+  var gridVideos = Array.from(grid.querySelectorAll("video"));
+
+  /* -------- Lightbox: reproducción grande, inmediata, con sonido -------- */
   function render() {
-    var shortcode = items[current].getAttribute("data-shortcode");
-    stage.innerHTML =
-      '<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/' + shortcode + '/" data-instgrm-version="14">' +
-      '<a href="https://www.instagram.com/p/' + shortcode + '/" target="_blank" rel="noopener">Ver esta publicación en Instagram</a>' +
-      "</blockquote>";
-    processEmbeds(10);
+    var item = items[current];
+    stage.innerHTML = "";
+    var video = document.createElement("video");
+    video.src = item.video;
+    video.controls = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.className = "video-lightbox-video";
+    stage.appendChild(video);
+
+    var caption = document.createElement("p");
+    caption.className = "video-lightbox-caption";
+    caption.textContent = item.caption;
+    stage.appendChild(caption);
+
     if (counter) counter.textContent = (current + 1) + " / " + items.length;
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === items.length - 1;
   }
 
   function open(i) {
+    gridVideos.forEach(function (v) { v.pause(); v.currentTime = 0; });
     current = i;
     render();
     lightbox.hidden = false;
@@ -56,10 +97,6 @@
     stage.innerHTML = "";
     document.body.style.overflow = "";
   }
-
-  items.forEach(function (el, i) {
-    el.addEventListener("click", function () { open(i); });
-  });
 
   closeBtn.addEventListener("click", close);
   lightbox.addEventListener("click", function (e) { if (e.target === lightbox) close(); });
