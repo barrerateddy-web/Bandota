@@ -34,5 +34,30 @@ window.VIDEO_GALLERY_DATA = [
     video: "assets/video/galeria/06-karol-g-bailables.mp4",
     poster: "assets/video/galeria/06-karol-g-bailables.webp",
     caption: "Los éxitos de Karol G en versiones bailables."
+  },
+  {
+    video: "assets/video/galeria/07-la-lorenza.mp4",
+    poster: "assets/video/galeria/07-la-lorenza.webp",
+    caption: "La Lorenza, música colombiana."
+  },
+  {
+    video: "assets/video/galeria/08-la-bandota.mp4",
+    poster: "assets/video/galeria/08-la-bandota.webp",
+    caption: "¡La Bandota!"
+  },
+  {
+    video: "assets/video/galeria/09-karol-g-antes-conocido.mp4",
+    poster: "assets/video/galeria/09-karol-g-antes-conocido.webp",
+    caption: "Si antes te hubiera conocido, Karol G"
+  },
+  {
+    video: "assets/video/galeria/10-joe-arroyo.mp4",
+    poster: "assets/video/galeria/10-joe-arroyo.webp",
+    caption: "La música del Caribe, la música del Joe Arroyo"
+  },
+  {
+    video: "assets/video/galeria/11-show-la-bandota.mp4",
+    poster: "assets/video/galeria/11-show-la-bandota.webp",
+    caption: "Así es un show con ¡La Bandota!"
   }
 ];
