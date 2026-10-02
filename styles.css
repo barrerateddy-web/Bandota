@@ -1489,20 +1489,20 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 /* =============================================================
    31. Galería de videos (página Videos) — carrete horizontal
    ============================================================= */
-.reel-feed-wrap { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem; }
+.reel-feed-wrap { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: 2rem; }
 .reel-feed {
-  position: relative; width: min(820px, 100%); height: min(62vh, 560px);
+  position: relative; width: min(700px, 100%); height: min(64vh, 580px);
   overflow: hidden; border-radius: 22px;
 }
 .reel-feed-scroller {
-  width: 100%; height: 100%; display: flex; align-items: center; gap: 1rem;
+  width: 100%; height: 100%; display: flex; align-items: center; gap: .5rem;
   overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  padding-inline: calc(50% - min(140px, 31vw));
+  padding-inline: calc(50% - min(165px, 36vw));
 }
 .reel-feed-scroller::-webkit-scrollbar { display: none; }
 .reel {
-  position: relative; flex: none; width: min(280px, 62vw); height: 92%;
+  position: relative; flex: none; width: min(330px, 72vw); height: 96%;
   border-radius: 20px; overflow: hidden; background: #000;
   scroll-snap-align: center; cursor: pointer;
   display: flex; align-items: flex-end;
@@ -1523,7 +1523,7 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 }
 .reel-mute svg { width: 15px; height: 15px; }
 .reel-caption {
-  position: relative; z-index: 1; margin: 0; padding: 1.1rem 1rem;
+  position: relative; z-index: 1; margin: 0; padding: 1.1rem 3.6rem 1.1rem 1rem;
   font-size: .85rem; line-height: 1.4; color: #fff; font-weight: 500;
   text-shadow: 0 2px 6px rgba(0,0,0,.5);
   opacity: 0; pointer-events: none; transition: opacity .2s var(--ease-out);
@@ -1579,9 +1579,9 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 .reel-feed-arrow:hover { background: var(--accent-soft); }
 .reel-feed-hint { text-align: center; color: var(--mute); font-size: .8rem; margin-top: 1.1rem; }
 @media (max-width: 640px) {
-  .reel-feed-wrap { gap: .5rem; }
+  .reel-feed-wrap { gap: .35rem; }
   .reel-feed-arrow { width: 36px; height: 36px; font-size: 1.2rem; }
-  .reel-feed { height: min(54vh, 480px); }
+  .reel-feed { height: min(58vh, 520px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .reel { transition: none; }
