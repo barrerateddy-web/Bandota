@@ -123,7 +123,7 @@
     reel.addEventListener("click", function (e) {
       if (e.target.closest(".reel-actions") || e.target.closest(".reel-mute") || e.target.closest(".reel-share-menu")) return;
       if (!reel.classList.contains("is-active")) {
-        reel.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        scrollCardIntoView(reel);
         return;
       }
       if (video.paused) video.play().catch(function () { /* ignore */ }); else video.pause();
@@ -172,6 +172,11 @@
     if (closest) setActive(closest);
   }
 
+  function scrollCardIntoView(card, behavior) {
+    var targetLeft = card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    scroller.scrollTo({ left: targetLeft, behavior: behavior || "smooth" });
+  }
+
   var ticking = false;
   scroller.addEventListener("scroll", function () {
     if (ticking) return;
@@ -182,11 +187,11 @@
 
   if (prevBtn) prevBtn.addEventListener("click", function () {
     var idx = cards.indexOf(activeCard);
-    if (idx > 0) cards[idx - 1].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    if (idx > 0) scrollCardIntoView(cards[idx - 1]);
   });
   if (nextBtn) nextBtn.addEventListener("click", function () {
     var idx = cards.indexOf(activeCard);
-    if (idx < cards.length - 1) cards[idx + 1].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    if (idx < cards.length - 1) scrollCardIntoView(cards[idx + 1]);
   });
 
   var startCard = cards[0];
@@ -195,7 +200,7 @@
     if (target) startCard = target;
   }
   requestAnimationFrame(function () {
-    startCard.scrollIntoView({ inline: "center", block: "nearest" });
+    scrollCardIntoView(startCard, "auto");
     updateCarousel();
   });
 })();
