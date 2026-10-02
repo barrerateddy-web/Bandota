@@ -1594,7 +1594,7 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
   display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center;
 }
 @media (min-width: 880px) {
-  .videos-intro { grid-template-columns: 0.95fr 1.05fr; gap: 3.5rem; }
+  .videos-intro { grid-template-columns: 0.7fr 1.3fr; gap: 3rem; }
 }
 .videos-intro-text { max-width: 480px; }
 .videos-intro-media .video-embed { border-radius: 18px; }
