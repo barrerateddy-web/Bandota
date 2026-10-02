@@ -1,15 +1,19 @@
 /* =============================================================
    Galería de videos — página Videos
-   Feed vertical tipo Reels/TikTok: un video a la vez, autoplay en
-   silencio al entrar en pantalla, con botón de sonido, "me gusta"
-   (guardado localmente por visitante) y compartir (hoja nativa en
-   celular, o menú con WhatsApp/copiar link en computador).
+   Carrete horizontal: el video activo queda al centro reproduciéndose,
+   los demás se ven a los lados desvanecidos (100% en el centro, 10%
+   en los extremos). Deslizar o usar las flechas mueve el carrete —
+   el video que ya pasó queda hacia la izquierda. El video central
+   tiene sonido/like/compartir; los que están a los lados son solo
+   vista previa.
    ============================================================= */
 (function () {
   "use strict";
 
   var items = window.VIDEO_GALLERY_DATA || [];
   var scroller = document.querySelector("[data-reel-scroller]");
+  var prevBtn = document.querySelector("[data-reel-prev]");
+  var nextBtn = document.querySelector("[data-reel-next]");
   if (!scroller || !items.length) return;
 
   var globalMuted = true;
@@ -41,14 +45,6 @@
     video.muted = true;
     video.playsInline = true;
     video.preload = "metadata";
-
-    var progress = document.createElement("div");
-    progress.className = "reel-progress";
-    items.forEach(function (other) {
-      var seg = document.createElement("span");
-      if (other === item) seg.className = "is-active";
-      progress.appendChild(seg);
-    });
 
     var muteBtn = document.createElement("button");
     muteBtn.type = "button";
@@ -119,7 +115,6 @@
     actions.appendChild(shareBtn);
 
     reel.appendChild(video);
-    reel.appendChild(progress);
     reel.appendChild(muteBtn);
     reel.appendChild(caption);
     reel.appendChild(actions);
@@ -127,29 +122,80 @@
 
     reel.addEventListener("click", function (e) {
       if (e.target.closest(".reel-actions") || e.target.closest(".reel-mute") || e.target.closest(".reel-share-menu")) return;
+      if (!reel.classList.contains("is-active")) {
+        reel.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        return;
+      }
       if (video.paused) video.play().catch(function () { /* ignore */ }); else video.pause();
     });
 
     scroller.appendChild(reel);
   });
 
-  var videos = Array.from(scroller.querySelectorAll("video"));
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      var v = entry.target;
-      if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-        videos.forEach(function (other) { if (other !== v) other.pause(); });
-        v.muted = globalMuted;
-        v.play().catch(function () { /* ignore */ });
-      } else {
-        v.pause();
-      }
-    });
-  }, { root: scroller, threshold: [0, 0.6, 1] });
-  videos.forEach(function (v) { io.observe(v); });
+  var cards = Array.from(scroller.children);
+  var videos = cards.map(function (c) { return c.querySelector("video"); });
+  var activeCard = null;
 
+  function setActive(card) {
+    if (card === activeCard) return;
+    if (activeCard) {
+      activeCard.classList.remove("is-active");
+      var prevVideo = activeCard.querySelector("video");
+      prevVideo.pause();
+    }
+    activeCard = card;
+    card.classList.add("is-active");
+    var video = card.querySelector("video");
+    video.muted = globalMuted;
+    video.play().catch(function () { /* ignore */ });
+  }
+
+  function updateCarousel() {
+    var rect = scroller.getBoundingClientRect();
+    var centerX = rect.left + rect.width / 2;
+    var closest = null;
+    var closestDist = Infinity;
+
+    cards.forEach(function (card) {
+      var cardRect = card.getBoundingClientRect();
+      var cardCenter = cardRect.left + cardRect.width / 2;
+      var dist = Math.abs(cardCenter - centerX);
+      var maxDist = rect.width / 2 + cardRect.width / 2;
+      var ratio = Math.min(dist / maxDist, 1);
+      var opacity = 1 - ratio * 0.9; // 100% al centro -> 10% en los extremos
+      var scale = 1 - ratio * 0.14;
+      card.style.opacity = opacity.toFixed(3);
+      card.style.transform = "scale(" + scale.toFixed(3) + ")";
+      if (dist < closestDist) { closestDist = dist; closest = card; }
+    });
+
+    if (closest) setActive(closest);
+  }
+
+  var ticking = false;
+  scroller.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { updateCarousel(); ticking = false; });
+  });
+  window.addEventListener("resize", updateCarousel);
+
+  if (prevBtn) prevBtn.addEventListener("click", function () {
+    var idx = cards.indexOf(activeCard);
+    if (idx > 0) cards[idx - 1].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  });
+  if (nextBtn) nextBtn.addEventListener("click", function () {
+    var idx = cards.indexOf(activeCard);
+    if (idx < cards.length - 1) cards[idx + 1].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  });
+
+  var startCard = cards[0];
   if (location.hash.indexOf("#video-") === 0) {
     var target = document.getElementById(location.hash.slice(1));
-    if (target) target.scrollIntoView();
+    if (target) startCard = target;
   }
+  requestAnimationFrame(function () {
+    startCard.scrollIntoView({ inline: "center", block: "nearest" });
+    updateCarousel();
+  });
 })();
