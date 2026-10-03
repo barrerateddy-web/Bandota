@@ -140,11 +140,19 @@
     scroller.appendChild(buildReel(item, false));
   });
 
-  // Clon del último video, puesto antes del primero: así el carrete
-  // arranca con un vecino a la izquierda (efecto de bucle) y no queda
-  // espacio vacío al cargar la página.
-  var loopClone = buildReel(items[items.length - 1], true);
-  scroller.insertBefore(loopClone, scroller.firstChild);
+  var N = items.length;
+  function itemAt(i) { return items[((i % N) + N) % N]; }
+
+  // Bucle infinito: se clonan los 2 videos finales antes del primero y
+  // los 2 iniciales después del último. Así la fila de 5 siempre tiene
+  // vecinos de verdad en los extremos (penúltimo·último·PRIMERO·2do·3ro,
+  // y así sucesivamente) y nunca se "acaba" — ver loopTargetIndex más abajo,
+  // que reubica el scroll sin que se note en cuanto se entra a una zona clonada.
+  var REAL_OFFSET = 2;
+  scroller.insertBefore(buildReel(itemAt(N - 1), true), scroller.firstChild);
+  scroller.insertBefore(buildReel(itemAt(N - 2), true), scroller.firstChild);
+  scroller.appendChild(buildReel(itemAt(0), true));
+  scroller.appendChild(buildReel(itemAt(1), true));
 
   var cards = Array.from(scroller.children);
   var videos = cards.map(function (c) { return c.querySelector("video"); });
@@ -200,11 +208,42 @@
     scroller.scrollTo({ left: targetLeft, behavior: behavior || "smooth" });
   }
 
+  // Mapea un card-clon (índice en `cards`) al card real equivalente,
+  // para saltar el scroll ahí apenas se detiene — sin animación, así
+  // el salto no se percibe y el carrete puede girar sin fin.
+  function loopTargetIndex(idx) {
+    if (idx === 0) return N;             // clon del penúltimo -> real
+    if (idx === 1) return N + 1;         // clon del último -> real
+    if (idx === cards.length - 2) return REAL_OFFSET;       // clon del 1ro -> real
+    if (idx === cards.length - 1) return REAL_OFFSET + 1;   // clon del 2do -> real
+    return -1;
+  }
+
+  function maybeLoopReset() {
+    var idx = cards.indexOf(activeCard);
+    var targetIdx = loopTargetIndex(idx);
+    if (targetIdx === -1) return;
+
+    var cloneCard = cards[idx];
+    var targetCard = cards[targetIdx];
+    var cloneVideo = cloneCard.querySelector("video");
+    var targetVideo = targetCard.querySelector("video");
+    var delta = targetCard.offsetLeft - cloneCard.offsetLeft;
+
+    scroller.scrollLeft += delta;
+    if (cloneVideo && targetVideo) targetVideo.currentTime = cloneVideo.currentTime || 0;
+    updateCarousel();
+  }
+
   var ticking = false;
+  var resetTimer = null;
   scroller.addEventListener("scroll", function () {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { updateCarousel(); ticking = false; });
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(function () { updateCarousel(); ticking = false; });
+    }
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(maybeLoopReset, 140);
   });
   window.addEventListener("resize", updateCarousel);
 
@@ -217,7 +256,7 @@
     if (idx < cards.length - 1) scrollCardIntoView(cards[idx + 1]);
   });
 
-  var startCard = cards.length > 1 ? cards[1] : cards[0];
+  var startCard = cards[REAL_OFFSET] || cards[0];
   if (location.hash.indexOf("#video-") === 0) {
     var target = document.getElementById(location.hash.slice(1));
     if (target) startCard = target;
