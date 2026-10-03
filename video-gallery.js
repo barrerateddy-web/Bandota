@@ -45,10 +45,12 @@
     var video = document.createElement("video");
     video.src = item.video;
     video.poster = item.poster;
-    video.loop = true;
     video.muted = true;
     video.playsInline = true;
     video.preload = "metadata";
+    video.addEventListener("ended", function () {
+      if (reel === activeCard) goNext();
+    });
 
     var muteBtn = document.createElement("button");
     muteBtn.type = "button";
@@ -247,14 +249,17 @@
   });
   window.addEventListener("resize", updateCarousel);
 
-  if (prevBtn) prevBtn.addEventListener("click", function () {
+  function goPrev() {
     var idx = cards.indexOf(activeCard);
     if (idx > 0) scrollCardIntoView(cards[idx - 1]);
-  });
-  if (nextBtn) nextBtn.addEventListener("click", function () {
+  }
+  function goNext() {
     var idx = cards.indexOf(activeCard);
     if (idx < cards.length - 1) scrollCardIntoView(cards[idx + 1]);
-  });
+  }
+
+  if (prevBtn) prevBtn.addEventListener("click", goPrev);
+  if (nextBtn) nextBtn.addEventListener("click", goNext);
 
   var startCard = cards[REAL_OFFSET] || cards[0];
   if (location.hash.indexOf("#video-") === 0) {
