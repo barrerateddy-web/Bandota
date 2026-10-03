@@ -150,26 +150,35 @@
     video.play().catch(function () { /* ignore */ });
   }
 
+  // Opacidad/escala fijas según la posición respecto al video activo
+  // (-2 ... +2 = 5 videos visibles): 20% · 50% · 100% · 50% · 30%.
+  var OPACITY_BY_OFFSET = { "-2": 0.2, "-1": 0.5, "0": 1, "1": 0.5, "2": 0.3 };
+  var SCALE_BY_OFFSET = { "-2": 0.82, "-1": 0.92, "0": 1, "1": 0.92, "2": 0.86 };
+  var FAR_OPACITY = 0.08;
+  var FAR_SCALE = 0.78;
+
   function updateCarousel() {
     var rect = scroller.getBoundingClientRect();
     var centerX = rect.left + rect.width / 2;
-    var closest = null;
+    var closestIndex = 0;
     var closestDist = Infinity;
 
-    cards.forEach(function (card) {
+    cards.forEach(function (card, i) {
       var cardRect = card.getBoundingClientRect();
       var cardCenter = cardRect.left + cardRect.width / 2;
       var dist = Math.abs(cardCenter - centerX);
-      var maxDist = rect.width / 2 + cardRect.width / 2;
-      var ratio = Math.min(dist / maxDist, 1);
-      var opacity = 1 - ratio * 0.9; // 100% al centro -> 10% en los extremos
-      var scale = 1 - ratio * 0.14;
-      card.style.opacity = opacity.toFixed(3);
-      card.style.transform = "scale(" + scale.toFixed(3) + ")";
-      if (dist < closestDist) { closestDist = dist; closest = card; }
+      if (dist < closestDist) { closestDist = dist; closestIndex = i; }
     });
 
-    if (closest) setActive(closest);
+    cards.forEach(function (card, i) {
+      var offset = i - closestIndex;
+      var opacity = OPACITY_BY_OFFSET[offset];
+      var scale = SCALE_BY_OFFSET[offset];
+      card.style.opacity = (opacity === undefined ? FAR_OPACITY : opacity).toFixed(3);
+      card.style.transform = "scale(" + (scale === undefined ? FAR_SCALE : scale).toFixed(3) + ")";
+    });
+
+    setActive(cards[closestIndex]);
   }
 
   function scrollCardIntoView(card, behavior) {
