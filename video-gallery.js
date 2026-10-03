@@ -33,10 +33,14 @@
     return location.origin + location.pathname.replace(/[^/]*$/, "") + "videos.html#video-" + id;
   }
 
-  items.forEach(function (item) {
+  function buildReel(item, isClone) {
     var reel = document.createElement("div");
     reel.className = "reel";
-    reel.id = "video-" + item.id;
+    if (isClone) {
+      reel.classList.add("reel-clone");
+    } else {
+      reel.id = "video-" + item.id;
+    }
 
     var video = document.createElement("video");
     video.src = item.video;
@@ -129,8 +133,18 @@
       if (video.paused) video.play().catch(function () { /* ignore */ }); else video.pause();
     });
 
-    scroller.appendChild(reel);
+    return reel;
+  }
+
+  items.forEach(function (item) {
+    scroller.appendChild(buildReel(item, false));
   });
+
+  // Clon del último video, puesto antes del primero: así el carrete
+  // arranca con un vecino a la izquierda (efecto de bucle) y no queda
+  // espacio vacío al cargar la página.
+  var loopClone = buildReel(items[items.length - 1], true);
+  scroller.insertBefore(loopClone, scroller.firstChild);
 
   var cards = Array.from(scroller.children);
   var videos = cards.map(function (c) { return c.querySelector("video"); });
@@ -203,7 +217,7 @@
     if (idx < cards.length - 1) scrollCardIntoView(cards[idx + 1]);
   });
 
-  var startCard = cards[0];
+  var startCard = cards.length > 1 ? cards[1] : cards[0];
   if (location.hash.indexOf("#video-") === 0) {
     var target = document.getElementById(location.hash.slice(1));
     if (target) startCard = target;
