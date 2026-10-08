@@ -34,6 +34,7 @@
       <a href="index.html">Inicio</a>
       <a href="sobre-la-bandota.html">Sobre La Bandota</a>
       <a href="servicios.html" class="nav-servicios is-active"><span class="nav-badge">Cotiza</span>Servicios</a>
+      <a href="repertorio.html">Repertorio</a>
       <a href="universo-bandota.html">Universo Bandota</a>
       <a href="videos.html">Videos</a>
       <a href="blog/index.html">Blog</a>
@@ -58,7 +59,7 @@
       <div class="hero-actions reveal">
         <a href="#cotizaciones" class="btn btn-primary">Cotizar mi evento</a>
         <a href="#portafolio" class="btn btn-ghost">Ver portafolio</a>
-        <a href="#repertorio" class="btn btn-ghost">Elegir repertorio</a>
+        <a href="repertorio.html" class="btn btn-ghost">Elegir repertorio</a>
       </div>
     </div>
   </section>
@@ -171,74 +172,6 @@
     </div>
   </section>
 
-  <section class="section" id="repertorio" data-repertorio>
-    <div class="container">
-      <p class="kicker reveal">Repertorio</p>
-      <h2 class="section-title reveal" data-split="lines">Elige las canciones<br>de tu noche.</h2>
-      <p class="section-sub reveal" data-edit-id="servicios-repertorio-sub">Marca las canciones que quieres escuchar en tu evento. Al final, envías tu selección con un clic — a nuestro equipo y, si quieres, también a tu organizador de eventos.</p>
-
-      <div class="rep-search reveal">
-        <input type="search" placeholder="Buscar canción o artista…" aria-label="Buscar canción o artista" data-rep-search>
-        <button type="button" class="rep-reset-link" data-rep-reset hidden>Empezar de nuevo</button>
-      </div>
-
-      <div class="rep-shell reveal">
-        <div class="rep-sidebar" data-rep-sidebar></div>
-        <div class="rep-content" data-rep-content>
-          <p class="rep-empty" data-rep-empty hidden>No encontramos canciones con ese nombre. Prueba con otra búsqueda.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="rep-bar" data-rep-bar>
-      <span class="rep-bar-count" data-rep-bar-count></span>
-      <button type="button" class="btn btn-primary" data-rep-bar-btn>Enviar selección</button>
-    </div>
-  </section>
-
-  <div class="rep-modal-overlay" data-rep-modal>
-    <div class="rep-modal" role="dialog" aria-modal="true" aria-labelledby="rep-modal-title">
-      <button type="button" class="rep-modal-close" data-rep-modal-close aria-label="Cerrar">&times;</button>
-      <h3 id="rep-modal-title">Enviar tu selección</h3>
-      <p class="rep-modal-sub">Revisa las canciones elegidas y dinos a quién la enviamos.</p>
-
-      <ul class="rep-modal-summary" data-rep-modal-summary></ul>
-
-      <form data-rep-modal-form>
-        <div class="form-row">
-          <label for="rep-names">Nombre de contacto *</label>
-          <input type="text" id="rep-names" required data-rep-names placeholder="Ej. María Restrepo">
-        </div>
-        <div class="form-row">
-          <label for="rep-date">Fecha del evento</label>
-          <input type="date" id="rep-date" data-rep-date>
-        </div>
-        <div class="form-row">
-          <label for="rep-planner-email">Email de tu organizador de eventos (opcional)</label>
-          <input type="email" id="rep-planner-email" data-rep-planner-email placeholder="organizador@ejemplo.com">
-        </div>
-        <div class="form-row">
-          <label for="rep-planner-phone">WhatsApp de tu organizador de eventos (opcional, con código de país)</label>
-          <input type="tel" id="rep-planner-phone" data-rep-planner-phone placeholder="Ej. 573001234567">
-        </div>
-
-        <div class="rep-modal-actions">
-          <button type="submit" class="btn btn-primary" data-rep-send-wa>Enviar a LA BANDOTA por WhatsApp</button>
-          <button type="submit" class="btn btn-ghost" data-rep-send-wa-planner hidden>Enviar también a mi organizador por WhatsApp</button>
-          <button type="submit" class="btn btn-ghost" data-rep-send-email>Enviar por correo</button>
-          <button type="submit" class="btn btn-ghost" data-rep-copy>Copiar selección</button>
-        </div>
-        <p class="rep-modal-note">Cada botón abre WhatsApp o tu correo ya con la lista lista para enviar — tú confirmas el envío.</p>
-      </form>
-
-      <div class="rep-modal-success" data-rep-modal-success hidden>
-        <div class="rep-modal-success-icon" aria-hidden="true">&check;</div>
-        <p class="rep-modal-success-text" data-rep-modal-success-text></p>
-        <button type="button" class="btn btn-primary" data-rep-modal-success-close>Cerrar</button>
-      </div>
-    </div>
-  </div>
-
   <section class="section" id="otros">
     <div class="container">
       <p class="kicker reveal">Otros</p>
@@ -300,8 +233,6 @@
 <script defer src="lib/ScrollTrigger.min.js"></script>
 <script defer src="lib/manifest.js"></script>
 <script defer src="main.js?v=20260813"></script>
-<script defer src="repertorio-data.js?v=20260819d"></script>
-<script defer src="repertorio.js?v=20260819i"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <script defer src="cotizador-data.js?v=20260908a"></script>
 <script defer src="cotizador.js?v=20260908a"></script>
