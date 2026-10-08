@@ -176,8 +176,11 @@
 
   // Opacidad/escala fijas según la posición respecto al video activo
   // (-2 ... +2 = 5 videos visibles): 20% · 50% · 100% · 50% · 30%.
+  // El activo (0) crece por encima de su tamaño base (ver .reel en
+  // styles.css, que deja la altura más corta para darle ese margen)
+  // para que se note mucho más que los demás.
   var OPACITY_BY_OFFSET = { "-2": 0.2, "-1": 0.5, "0": 1, "1": 0.5, "2": 0.3 };
-  var SCALE_BY_OFFSET = { "-2": 0.82, "-1": 0.92, "0": 1, "1": 0.92, "2": 0.86 };
+  var SCALE_BY_OFFSET = { "-2": 0.82, "-1": 0.92, "0": 1.17, "1": 0.92, "2": 0.86 };
   var FAR_OPACITY = 0.08;
   var FAR_SCALE = 0.78;
 

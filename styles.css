@@ -1502,7 +1502,7 @@ em { font-family: var(--font-display); font-style: italic; color: var(--accent);
 }
 .reel-feed-scroller::-webkit-scrollbar { display: none; }
 .reel {
-  position: relative; flex: none; width: min(200px, 42vw); height: 96%;
+  position: relative; flex: none; width: min(200px, 42vw); height: 84%;
   border-radius: 20px; overflow: hidden; background: #000;
   scroll-snap-align: center; cursor: pointer;
   display: flex; align-items: flex-end;
